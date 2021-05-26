@@ -16,7 +16,7 @@ public class LabelStar extends Label {
 	
 	public void setEstimatedCost(Node destination, int maxSpeed) {
 		
-		if(maxSpeed != 0) {this.estimatedCost = destination.getPoint().distanceTo(currentPeak.getPoint())/(double)maxSpeed;}
+		if(maxSpeed != 0) {this.estimatedCost = destination.getPoint().distanceTo(currentPeak.getPoint()) * 3600.0 / ((double)maxSpeed * 1000.0);}
 		else {this.estimatedCost = destination.getPoint().distanceTo(currentPeak.getPoint());}
 		
 	}

@@ -35,7 +35,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         this.origin = this.data.getOrigin();
         this.destination = this.data.getDestination();
     }
-    //Initialization function useful for A* (All peak written as false, infinite cost, no father)
+    //Initialization function useful for A*
 	
     protected void SetLabels(ShortestPathData data) {
     	
@@ -70,7 +70,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         while(!label_destination.isMarked() && !heap.isEmpty()) { 
         	
         	//Extract minHeap from heap and marked it
-        	Label minHeap = this.heap.deleteMin();
+        	Label minHeap = this.heap.deleteMin(); //label actuel
         	minHeap.setMarked();
         	notifyNodeMarked(minHeap.currentPeak);
         	

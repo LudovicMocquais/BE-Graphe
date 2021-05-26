@@ -13,7 +13,14 @@ public class Label implements Comparable<Label>{
 		return this.cost;
 	}
 	
-	public Label(Node currentPeak, Arc father,double cost,boolean marked) {
+	public Label (Node currentPeak) {
+        this.currentPeak = currentPeak;
+        this.marked = false;
+        this.cost = Float.POSITIVE_INFINITY;
+        this.father = null;
+    }
+	
+	public Label(Node currentPeak, Arc father,double cost) {
 		this.cost = cost;
 		this.currentPeak = currentPeak;
 		this.father = father;
@@ -43,6 +50,8 @@ public class Label implements Comparable<Label>{
 	public double getCoutTotal() {
 		return this.cost;
 	}
+	
+	public void setEstimatedCost(Node destination, int estimatedSpeed) {	}
 	
 	public int compareTo(Label other) {
         return Double.compare(this.getCoutTotal(), other.getCoutTotal());

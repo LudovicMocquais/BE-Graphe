@@ -3,24 +3,40 @@ import org.insa.graphs.algorithm.AbstractInputData.Mode;
 import org.insa.graphs.model.*;
 
 public class AStarAlgorithm extends DijkstraAlgorithm {
-
+	
     public AStarAlgorithm(ShortestPathData data) {
         super(data);
+        this.labels = new LabelStar[data.getGraph().size()];
     }
    
     @Override
     protected void SetLabels(ShortestPathData data) {
-    	
+    	int maxSpeed;
     	if(data.getMode()==Mode.LENGTH) {
-    		System.out.println("Lenght mode");
-    		for(int i=0;i<data.getGraph().getNodes().size();i++) 
-    			labels.add(new LabelStar(data.getGraph().getNodes().get(i),null,Double.POSITIVE_INFINITY,false,data.getDestination()));
-    	} 
-    	
-    	else {
-    		System.out.println("Time mode");
-    		for(int j=0;j<data.getGraph().getNodes().size();j++) 
-    			labels.add(new LabelStar(data.getGraph().getNodes().get(j),null,Double.POSITIVE_INFINITY,false,data.getDestination(),data.getGraph().getGraphInformation().getMaximumSpeed()));
+    		System.out.println("Length Mode");
+    		maxSpeed = 0;
+    	} else {
+    		System.out.println("Time Mode");
+    		maxSpeed = data.getGraph().getGraphInformation().getMaximumSpeed();
     	}
+
+		this.label_origin = new LabelStar(origin,null,0);
+
+        if (this.origin.getId() != this.destination.getId())
+            this.label_destination = new LabelStar(destination);
+        else
+            this.label_destination = this.label_origin;
+
+        for (Node node : this.nodes) {
+            if (node.getId() == this.origin.getId()) {
+                this.labels[node.getId()] = this.label_origin;
+            } else if (node.getId() == this.destination.getId()) {
+                this.labels[node.getId()] = this.label_destination;
+            } else {
+                this.labels[node.getId()] = new LabelStar(node);
+            }
+
+            this.labels[node.getId()].setEstimatedCost(data.getDestination(), maxSpeed);
+        }
     }
 }
